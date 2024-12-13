@@ -167,7 +167,6 @@ let userDatabase = [
 // --------------------------------------------------------------------------------------------------------------------------------------------------
 
 function closeLogin(){
-  // form.style.display="none"
   LoginSectionDiv.style.display="none"
   MainSection.style.display="contents"
   localStorage.setItem("isLogin",true)
