@@ -146,3 +146,10 @@ button:hover {
 form {
   animation: fadeIn 0.5s ease;
 }
+
+#footer {
+  background: #000000;
+  color: #fff;
+  text-align: center;
+  padding: 3rem 0;
+}

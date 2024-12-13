@@ -13,6 +13,7 @@
         justify-content: center;
         justify-items: center;
         align-items: center;
+        background: linear-gradient(135deg, #81c784, #4db6ac);
       }
       section {
         width: 100%;
@@ -48,6 +49,7 @@
 
       /* Input Fields Styling */
       input[type="text"],
+      input[type="email"],
       input[type="tel"] {
         width: 100%;
         padding: 10px;
@@ -58,85 +60,117 @@
       }
 
       input[type="text"]:focus,
+      input[type="email"]:focus,
       input[type="tel"]:focus {
         border-color: #000000;
         outline: none;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
       }
 
-      /* Button Styling */
-      #payButtun {
-        width: 100%;
-        padding: 10px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: #fff;
-        background-color: #000000;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-
-      #payButtun:hover {
-        background-color: #3f4041;
-      }
-
       #orderPNameDiv,
       #pNumberDiv,
-      #orderAddressDiv,
-      #paymentMethodDiv {
+      #orderAddressDiv {
         margin-bottom: 15px;
       }
+
+    .button-40 {
+    background-color: #111827;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex: 0 0 auto;
+    padding: .75rem 1.2rem;
+    text-align: center;
+    text-decoration: none #6B7280 solid;
+    text-decoration-thickness: auto;
+    transition-duration: .2s;
+    transition-property: background-color,border-color,color,fill,stroke;
+    transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+  }
+  
+  .button-40:hover {
+    background-color: #374151;
+  }
+  
+  .button-40:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+      
     </style>
   </head>
   <body>
-    <section>
+    <section id="form">
       <div class="heading">ONLY UPI PAYMENTS ACCEPTED</div>
       <div class="heading" id="money"></div>
+
       <form id="orderAddressForm">
         <div id="orderPNameDiv">
           <label for="orderPName">Enter Your Full Name:</label>
-          <input type="text" name="orderPName" id="orderPName" />
+          <input type="text" name="orderPName" id="orderPName" required/>
         </div>
         <div id="pNumberDiv">
           <label for="pNumber">Enter Your Number: </label>
-          <input type="tel" name="pNumber" id="pNumber" />
+          <input type="tel" name="pNumber" id="pNumber" required/>
         </div>
         <div id="orderAddressDiv">
           <label for="orderAddress">Enter Your Address: </label>
-          <input type="text" name="orderAddress" id="orderAddress" />
+          <input type="text" name="orderAddress" id="orderAddress" required/>
         </div>
         <div id="paymentMethodDiv">
           <label for="paymentMethod">Enter Your UPI ID: </label>
-          <input type="text" id="paymentMethod" name="paymentMethod" />
+          <input type="email" id="paymentMethod" name="paymentMethod" required/>
         </div>
-        <div id="payButtunDiv">
-          <button id="payButton" onclick="order()">Make Payment</button>
-        </div>
+
+        <button type="submit" id="payButtunDiv" class="button-40" onclick="ordercon(event)">
+          Make Payment
+        </button>
+        
       </form>
     </section>
+
+    <section id="paymentSuccess" style="display: none;">
+      <div class="heading" style="color: green;">Payment Successfully Completed</div>
+    </section>
+
     <script>
-
-            document.getElementById("money").innerHTML=`Total Money : ${JSON.parse(localStorage.getItem("price"))}`
-            let data = JSON.parse(localStorage.getItem("cart"));
-      function order() {
+      document.getElementById("form").style.display="block";
+      document.getElementById("paymentSuccess").style.display="none";
+      document.getElementById("money").innerHTML = `Total Money : ₹ ${JSON.parse(
+        localStorage.getItem("price")
+      )}
+      `;
+      function ordercon(event) {
+        event.preventDefault();
         let con = confirm("Make paymet confirm");
-
         if (con) {
-          let name = document.getElementById("orderPName");
-          let namevalue = name.trim();
-
-          let number = document.getElementById("pNumber");
-          let Numbervalue = number.trim();
-
-          let Add = document.getElementById("orderAddress");
-          let Addvalue = Add.trim();
-
-          let upiid = document.getElementById("paymentMethod");
-          let upiidvalue = upiid.trim();
+          document.getElementById("orderPName").value=""
+          document.getElementById("pNumber").value=""
+          document.getElementById("orderAddress").value=""
+          document.getElementById("paymentMethod").value=""
+          paymentSuccess()
         }
       }
+
+      function paymentSuccess() {
+        document.getElementById("form").style.display="none";
+        document.getElementById("paymentSuccess").style.display="contents";
+        setTimeout(() => {
+
+          localStorage.setItem("cart","[]")
+          localStorage.setItem("price","")
+          location.href="main.html"
+        }, 1500);
+      }
+
     </script>
+
   </body>
 </html>

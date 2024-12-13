@@ -62,6 +62,7 @@ let back = document.getElementById("backBut");
 let itemData = [];
 localStorage.setItem("singleItem",JSON.stringify([]))
 let backStep = false;
+let footer = document.getElementById("footer")
 let LoginSectionDiv = document.getElementById("LoginSectionDiv")
 homeRender();
 
@@ -79,7 +80,8 @@ function homeRender() {
   MainSection.innerHTML = "";
   back.style.display = "none";
   backStep = false;
-
+  footer.style.display="block"
+  
   let Electronics = document.createElement("section");
   Electronics.id = "Electronics";
   Electronics.setAttribute("class", "mainpage");
@@ -189,8 +191,9 @@ function homeRender() {
  cloAdd.setAttribute("class", "mainpage");
  cloAdd.style.backgroundColor="white"
   MainSection.append(cloAdd)
-  localStorage.setItem("backPath", JSON.stringify(["homeRender"]));
 
+
+  localStorage.setItem("backPath", JSON.stringify(["homeRender"]));
 }
 
 function renderitems(a) {
@@ -257,6 +260,7 @@ function display() {
     });
     itemSection.append(y);
   });
+  footer.style.display="none"
 }
 
 function BACK(a) {
@@ -284,6 +288,7 @@ function BACK(a) {
 }
 
 function displayCart(){
+  footer.style.display="none"
   let loginn = localStorage.getItem("isLogin")
   if(loginn == "false"){
     alert("Please login to open cart")
@@ -359,11 +364,14 @@ function displayCart(){
   <div><div>Final Amount</div><div>₹${(TotalAmount+40+TotalAmount*(18/100)-(TotalAmount)*(5/100)).toFixed(2)}</div></div>`
 
   CartSection.append(amountDiv);
-  localStorage.setItem("price",JSON.stringify((TotalAmount+40+TotalAmount*(18/100)-(TotalAmount*(18/100))*(5/100)).toFixed(2)))
+  localStorage.setItem("price",JSON.stringify((TotalAmount+40+TotalAmount*(18/100)-(TotalAmount)*(5/100)).toFixed(2)))
   let buyBut = document.createElement("button");
   buyBut.id="buyBut";
   buyBut.setAttribute("class","button-40")
   buyBut.innerHTML="BUY NOW"
+  buyBut.addEventListener("click",()=>{
+    location.href="form.html"  
+  })
   amountDiv.append(buyBut)
   MainSection.append(CartSection)
 }
